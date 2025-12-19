@@ -18,12 +18,10 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
-
 public class RegistrosSensoresController implements Initializable {
 
     @FXML
     private Label lbl;
-
 
     private Usuario user = LoginController.usuarioActivo;
     private int idActivo = LoginController.idActivo;
@@ -33,10 +31,10 @@ public class RegistrosSensoresController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         StringBuilder mensajesEncontrados = new StringBuilder();
 
-            Vector<String> registros = db.obtenerDatosDeSensores();
-            for (String mensaje : registros) {
-                mensajesEncontrados.append(mensaje).append("\n");
-            }
+        Vector<String> registros = db.obtenerDatosDeSensores();
+        for (String mensaje : registros) {
+            mensajesEncontrados.append(mensaje).append("\n");
+        }
 
         lbl.setText(mensajesEncontrados.toString());
     }
@@ -50,34 +48,14 @@ public class RegistrosSensoresController implements Initializable {
     private void volverMenu(ActionEvent event) throws IOException {
         // Cargar la ventana de inicio presidente.fxml
         if (user.getTipo().equals("residente")) {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/gui/login/menu_residente.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            NavigationUtils.switchView(event, "/com/gui/login/menu_residente.fxml");
         } else if (user.getTipo().equals("portero")) {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/gui/login/menu_portero.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            NavigationUtils.switchView(event, "/com/gui/login/menu_portero.fxml");
         } else if (user.getTipo().equals("tecnico")) {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/gui/login/menu_tecnico.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            NavigationUtils.switchView(event, "/com/gui/login/menu_tecnico.fxml");
         } else if (user.getTipo().equals("presidente")) {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/gui/login/menu_presidente.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            NavigationUtils.switchView(event, "/com/gui/login/menu_presidente.fxml");
         }
 
     }
 }
-
-
-
-

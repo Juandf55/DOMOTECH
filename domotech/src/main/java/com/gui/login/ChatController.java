@@ -23,13 +23,20 @@ import java.util.Vector;
 
 public class ChatController implements Initializable {
 
-    @FXML private Button btn;
-    @FXML private Button backBtn;
-    @FXML private TextField txt;
-    @FXML private ScrollPane scrollPane;
-    @FXML private VBox principal;
-    @FXML private VBox vboxChat;
-    @FXML private AnchorPane root;
+    @FXML
+    private Button btn;
+    @FXML
+    private Button backBtn;
+    @FXML
+    private TextField txt;
+    @FXML
+    private ScrollPane scrollPane;
+    @FXML
+    private VBox principal;
+    @FXML
+    private VBox vboxChat;
+    @FXML
+    private AnchorPane root;
 
     private final Usuario user = LoginController.usuarioActivo;
     private final DatabaseConnection db = new DatabaseConnection();
@@ -129,17 +136,14 @@ public class ChatController implements Initializable {
         String tipo = user.getTipo().toLowerCase();
         String rutaFXML = switch (tipo) {
             case "residente" -> "/com/gui/login/menu_residente.fxml";
-            case "portero"   -> "/com/gui/login/menu_portero.fxml";
-            case "tecnico"   -> "/com/gui/login/menu_tecnico.fxml";
+            case "portero" -> "/com/gui/login/menu_portero.fxml";
+            case "tecnico" -> "/com/gui/login/menu_tecnico.fxml";
             case "presidente" -> "/com/gui/login/menu_presidente.fxml";
             default -> null;
         };
 
         if (rutaFXML != null) {
-            Parent root = FXMLLoader.load(getClass().getResource(rutaFXML));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
+            NavigationUtils.switchView(event, rutaFXML);
         }
     }
 }

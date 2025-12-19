@@ -1,4 +1,5 @@
 package com.gui.login;
+
 import org.apache.commons.codec.digest.DigestUtils;
 
 import com.gui.login.model.*;
@@ -42,7 +43,6 @@ public class SingupController {
     @FXML
     private TextField txt_type;
 
-
     @FXML
     private TextField txt_nombreComunidad;
 
@@ -57,7 +57,8 @@ public class SingupController {
         String Stringedad = txt_edad.getText();
         String nombreComunidad = txt_nombreComunidad.getText();
 
-        if (username.isEmpty() || password.isEmpty() || correo.isEmpty() || tipo.isEmpty() || Stringedad.isEmpty() || nombreComunidad.isEmpty()) {
+        if (username.isEmpty() || password.isEmpty() || correo.isEmpty() || tipo.isEmpty() || Stringedad.isEmpty()
+                || nombreComunidad.isEmpty()) {
             lbl_validation.setText("Por favor, completa la información");
             lbl_validation.setTextFill(Color.RED);
             return;
@@ -71,7 +72,8 @@ public class SingupController {
             Usuario nuevoUsuario = null;
 
             // Aquí podrías comprobar si el usuario ya existe en base de datos si quieres.
-            // Si lo haces, añade un método tipo "existeUsuario(nombre)" en DatabaseConnection
+            // Si lo haces, añade un método tipo "existeUsuario(nombre)" en
+            // DatabaseConnection
 
             switch (tipo.toLowerCase()) {
                 case "presidente":
@@ -124,14 +126,7 @@ public class SingupController {
                     lbl_validation.setTextFill(Color.RED);
                     PauseTransition pause = new PauseTransition(Duration.seconds(3));
                     pause.setOnFinished(e -> {
-                        try {
-                            Parent root = FXMLLoader.load(getClass().getResource("/com/gui/login/login.fxml"));
-                            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                            stage.setScene(new Scene(root));
-                            stage.show();
-                        } catch (IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
+                        NavigationUtils.switchView(event, "/com/gui/login/login.fxml");
                     });
                     pause.play();
                 } else {
@@ -143,14 +138,7 @@ public class SingupController {
 
                         PauseTransition pause = new PauseTransition(Duration.seconds(3));
                         pause.setOnFinished(e -> {
-                            try {
-                                Parent root = FXMLLoader.load(getClass().getResource("/com/gui/login/login.fxml"));
-                                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                                stage.setScene(new Scene(root));
-                                stage.show();
-                            } catch (IOException ex) {
-                                throw new RuntimeException(ex);
-                            }
+                            NavigationUtils.switchView(event, "/com/gui/login/login.fxml");
                         });
                         pause.play();
                     } else {
@@ -161,14 +149,11 @@ public class SingupController {
                 }
             }
 
-
         } catch (NumberFormatException e) {
 
             lbl_validation.setText("La edad debe ser un número");
             lbl_validation.setTextFill(Color.RED);
+        }
     }
-}
-
-
 
 }

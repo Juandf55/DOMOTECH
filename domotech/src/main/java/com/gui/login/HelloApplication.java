@@ -1,4 +1,5 @@
 package com.gui.login;
+
 import java.util.Scanner;
 import java.util.Vector;
 import com.gui.login.model.DatabaseConnection;
@@ -19,7 +20,6 @@ public class HelloApplication extends Application {
 
     static ArrayList<Puerta> ListaPuertasPublicas = new ArrayList<Puerta>();
 
-
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("login.fxml"));
@@ -30,12 +30,12 @@ public class HelloApplication extends Application {
         stage.setTitle("DOMOTECH");
         stage.setMinWidth(960); // Ancho mínimo de la ventana
         stage.setMinHeight(540); // Alto mínimo de la ventana
+        stage.setFullScreenExitHint(""); // Desactiva el mensaje de "Pulsa ESC"
+        stage.setFullScreen(true);
         stage.show();
     }
 
     public static void main(String[] args) {
-            launch();
-        }
+        launch();
     }
-
-
+}

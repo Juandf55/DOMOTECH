@@ -38,7 +38,6 @@ public class IluminacionController {
 
     private DatabaseConnection d = new DatabaseConnection();
 
-
     // Método para inicializar los controles según los valores de los sensores
     private void inicializarControlesSegunSensores() {
 
@@ -58,7 +57,6 @@ public class IluminacionController {
             System.out.println("No hay dato disponible.");
         }
 
-
         // Ajustar los sliders y colorpickers en función de la temperatura
         if (temperatura_primitivo < 15) { // Frío
 
@@ -67,14 +65,12 @@ public class IluminacionController {
             colorpicker3.setValue(Color.YELLOW);
             colorpicker4.setValue(Color.YELLOW);
 
-
         } else if (temperatura_primitivo > 30) { // Calor
 
             colorpicker1.setValue(Color.CYAN);
             colorpicker2.setValue(Color.CYAN);
             colorpicker3.setValue(Color.CYAN);
             colorpicker4.setValue(Color.CYAN);
-
 
         } else { // Temperatura normal
             // Para temperatura moderada, establecer un color neutral (blanco)
@@ -92,7 +88,7 @@ public class IluminacionController {
             slider2.setValue(80);
             slider3.setValue(80);
             slider4.setValue(80);
-        } else if (intensidadLuz_primitivo  > 3970) { // Mucha luz
+        } else if (intensidadLuz_primitivo > 3970) { // Mucha luz
             // Si hay mucha luz, reducir la intensidad de los sliders
             slider1.setValue(30);
             slider2.setValue(30);
@@ -117,19 +113,12 @@ public class IluminacionController {
     @FXML
     private void VolverInicio(ActionEvent event) throws IOException {
         // Cargar la ventana de inicio presidente.fxml
-        Parent root = FXMLLoader.load(getClass().getResource("/com/gui/login/menu_portero.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        NavigationUtils.switchView(event, "/com/gui/login/menu_portero.fxml");
     }
+
     @FXML
     private void Mapa(ActionEvent event) throws IOException {
         // Cargar la ventana de inicio presidente.fxml
-        Parent root = FXMLLoader.load(getClass().getResource("/com/gui/login/Mapa.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        NavigationUtils.switchView(event, "/com/gui/login/Mapa.fxml");
     }
 }

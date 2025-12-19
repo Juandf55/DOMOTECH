@@ -14,8 +14,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-
-
 public class TecnicoController {
 
     @FXML
@@ -35,11 +33,8 @@ public class TecnicoController {
     @FXML
     public Button chat;
 
-
-
     @FXML
     private void initialize() {
-
 
         vboxPrincipal2.toFront();
 
@@ -50,85 +45,26 @@ public class TecnicoController {
             user.setText("User: Desconocido"); // Caso por si el usuario es null
         }
     }
+
     @FXML
     private void setControltecnico(ActionEvent event) {
-        try {
-            // Cargar el archivo FXML de la nueva ventana
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gui/login/menu_alertas.fxml"));
-            Parent nuevaVentanaRoot = loader.load();
-
-            // Crear una nueva escena con el contenido cargado
-            Scene nuevaVentanaScene = new Scene(nuevaVentanaRoot);
-
-            // Obtener la ventana actual (stage) a partir del evento
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            // Establecer la nueva escena en la ventana actual
-            currentStage.setScene(nuevaVentanaScene);
-
-            // Mostrar la ventana con la nueva escena
-            currentStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace(); // Para propósitos de depuración
-        }}
+        NavigationUtils.switchView(event, "/com/gui/login/menu_alertas.fxml");
+    }
 
     @FXML
     private void chat(ActionEvent event) {
-        try {
-            // Cargar el archivo FXML de la nueva ventana
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gui/login/chat.fxml"));
-            Parent nuevaVentanaRoot = loader.load();
-
-            // Crear una nueva escena con el contenido cargado
-            Scene nuevaVentanaScene = new Scene(nuevaVentanaRoot);
-
-            // Obtener la ventana actual (stage) a partir del evento
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            // Establecer la nueva escena en la ventana actual
-            currentStage.setScene(nuevaVentanaScene);
-
-            // Mostrar la ventana con la nueva escena
-            currentStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace(); // Para propósitos de depuración
-        }}
-
+        NavigationUtils.switchView(event, "/com/gui/login/chat.fxml");
+    }
 
     @FXML
     private void handleSaldoButtonAction2(ActionEvent event) {
-        try {
-            // Cargar el archivo FXML de la nueva ventana
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gui/login/saldo_view.fxml"));
-            Parent nuevaVentanaRoot = loader.load();
-
-            // Crear una nueva escena con el contenido cargado
-            Scene nuevaVentanaScene = new Scene(nuevaVentanaRoot);
-
-            // Obtener la ventana actual (stage) a partir del evento
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            // Establecer la nueva escena en la ventana actual
-            currentStage.setScene(nuevaVentanaScene);
-
-            // Mostrar la ventana con la nueva escena
-            currentStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace(); // Para propósitos de depuración
-        }
+        NavigationUtils.switchView(event, "/com/gui/login/saldo_view.fxml");
     }
 
     @FXML
     private void VolverLogin(ActionEvent event) throws IOException {
         // Cargar la ventana de inicio presidente.fxml
-        Parent root = FXMLLoader.load(getClass().getResource("/com/gui/login/login.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        NavigationUtils.switchView(event, "/com/gui/login/login.fxml");
 
     }
 

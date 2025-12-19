@@ -37,7 +37,6 @@ public class AIResidenteController {
     private Usuario user = LoginController.usuarioActivo; // Obtiene el usuario activo
     private ListaEnlazada<String> registross = new ListaEnlazada<>(); // Lista de registros
 
-
     // Método para abrir la puerta principal
     @FXML
     public void abrirPuertaPrincipal(ActionEvent e) {
@@ -47,11 +46,11 @@ public class AIResidenteController {
         }
 
         // Crear el registro de la puerta principal
-        Registro registro = new Registro(user.getNombre(), "Puerta Principal", obtenerIdSensor("Puerta Principal"), idActivo);
+        Registro registro = new Registro(user.getNombre(), "Puerta Principal", obtenerIdSensor("Puerta Principal"),
+                idActivo);
         DatabaseConnection db = new DatabaseConnection();
         db.insertarSensor(registro); // Guardar en la base de datos
         lbl.setText("Puerta " + registro.getDescripcion() + " abierta");
-
 
     }
 
@@ -69,6 +68,7 @@ public class AIResidenteController {
         db.insertarSensor(registro);
         lbl.setText("Puerta " + registro.getDescripcion() + " abierta");
     }
+
     public void abrirPuertaGaraje2(ActionEvent e) {
         if (user == null) {
             System.err.println("❌ Error: Usuario no autenticado.");
@@ -102,7 +102,8 @@ public class AIResidenteController {
     private int obtenerIdSensor(String ubicacion) {
         DatabaseConnection db = new DatabaseConnection();
         try (Connection conn = db.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement("SELECT id_Sensor FROM asignacion_sensor WHERE ubicacion = ?")) {
+                PreparedStatement pstmt = conn
+                        .prepareStatement("SELECT id_Sensor FROM asignacion_sensor WHERE ubicacion = ?")) {
 
             pstmt.setString(1, ubicacion);
             ResultSet rs = pstmt.executeQuery();
@@ -138,16 +139,12 @@ public class AIResidenteController {
         }
 
         if (!rutaMenu.isEmpty()) {
-            Parent root = FXMLLoader.load(getClass().getResource(rutaMenu));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            NavigationUtils.switchView(event, rutaMenu);
         }
     }
 
     // Método para mostrar el registro (ejemplo de cómo agregar registros)
     public void mostrarRegistro(ArrayList<String> array, String elemento) {
         array.add(elemento);
-    }}
-
+    }
+}

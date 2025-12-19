@@ -37,10 +37,6 @@ public class SaldoControlador {
     @FXML
     private void VolverInicio(ActionEvent event) throws IOException {
         // Cargar la ventana de inicio presidente.fxml
-        Parent root = FXMLLoader.load(getClass().getResource("/com/gui/login/menu_presidente.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        NavigationUtils.switchView(event, "/com/gui/login/menu_presidente.fxml");
     }
 }

@@ -20,7 +20,6 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import com.gui.login.model.DatabaseConnection;
 
-
 public class RegistrosResidenteController implements Initializable {
 
     @FXML
@@ -61,34 +60,14 @@ public class RegistrosResidenteController implements Initializable {
     private void volverMenu(ActionEvent event) throws IOException {
         // Cargar la ventana de inicio presidente.fxml
         if (user.getTipo().equals("residente")) {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/gui/login/menu_residente.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            NavigationUtils.switchView(event, "/com/gui/login/menu_residente.fxml");
         } else if (user.getTipo().equals("portero")) {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/gui/login/menu_portero.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            NavigationUtils.switchView(event, "/com/gui/login/menu_portero.fxml");
         } else if (user.getTipo().equals("tecnico")) {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/gui/login/menu_tecnico.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            NavigationUtils.switchView(event, "/com/gui/login/menu_tecnico.fxml");
         } else if (user.getTipo().equals("presidente")) {
-            Parent root = FXMLLoader.load(getClass().getResource("/com/gui/login/menu_presidente.fxml"));
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+            NavigationUtils.switchView(event, "/com/gui/login/menu_presidente.fxml");
         }
 
     }
 }
-
-
-
-

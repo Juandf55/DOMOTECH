@@ -1,6 +1,5 @@
 package com.gui.login;
 
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,11 +19,7 @@ public class MapaController {
     @FXML
     private void VolverIluminacion(ActionEvent event) throws IOException {
         // Cargar la ventana de inicio presidente.fxml
-        Parent root = FXMLLoader.load(getClass().getResource("/com/gui/login/menu_iluminacion.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        NavigationUtils.switchView(event, "/com/gui/login/menu_iluminacion.fxml");
 
     }
 }

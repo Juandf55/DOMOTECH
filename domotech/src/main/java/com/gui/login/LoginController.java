@@ -39,8 +39,6 @@ public class LoginController {
 
     public static int idActivo;
 
-
-
     @FXML
     void loginValidate(ActionEvent event) {
         String username = txt_username.getText(); // Obtiene el nombre de usuario
@@ -55,69 +53,24 @@ public class LoginController {
             // Verificamos si el usuario es igual a "presidente"
             if (verificarUsuario().equals("presidente")) {
                 // Cargar la nueva ventana si el usuario es "director"
-                Parent root = null;
-                try {
-                    root = FXMLLoader.load(getClass().getResource("/com/gui/login/menu_presidente.fxml"));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.setMinWidth(960); // Ancho mínimo de la ventana
-                stage.setMinHeight(540); // Alto mínimo de la ventana
-                stage.show();
+                NavigationUtils.switchView(event, "/com/gui/login/menu_presidente.fxml");
             }
             // Verificamos si el usuario es igual a "portero"
             else if (verificarUsuario().equals("portero")) {
                 // Cargar la nueva ventana si el usuario es "portero"
-                Parent root = null;
-                try {
-                    root = FXMLLoader.load(getClass().getResource("/com/gui/login/menu_portero.fxml"));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.setMinWidth(960); // Ancho mínimo de la ventana
-                stage.setMinHeight(540); // Alto mínimo de la ventana
-                stage.show();
-            }
-            else if (verificarUsuario().equals("tecnico")) {
+                NavigationUtils.switchView(event, "/com/gui/login/menu_portero.fxml");
+            } else if (verificarUsuario().equals("tecnico")) {
                 // Cargar la nueva ventana si el usuario es "portero"
-                Parent root = null;
-                try {
-                    root = FXMLLoader.load(getClass().getResource("/com/gui/login/menu_tecnico.fxml"));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.setMinWidth(960); // Ancho mínimo de la ventana
-                stage.setMinHeight(540); // Alto mínimo de la ventana
-                stage.show();
-            }
-            else if (verificarUsuario().equals("residente")) {
+                NavigationUtils.switchView(event, "/com/gui/login/menu_tecnico.fxml");
+            } else if (verificarUsuario().equals("residente")) {
                 // Cargar la nueva ventana si el usuario es "portero"
-                Parent root = null;
-                try {
-                    root = FXMLLoader.load(getClass().getResource("/com/gui/login/menu_residente.fxml"));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-                Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.setMinWidth(960); // Ancho mínimo de la ventana
-                stage.setMinHeight(540); // Alto mínimo de la ventana
-                stage.show();
+                NavigationUtils.switchView(event, "/com/gui/login/menu_residente.fxml");
             }
             // Si el usuario no es "director" ni "portero"
 
             // Aquí puedes validar el usuario y contraseña
-            // Para este ejemplo, asumiremos que el usuario es "admin" y la contraseña es "admin"
+            // Para este ejemplo, asumiremos que el usuario es "admin" y la contraseña es
+            // "admin"
 
             else {
                 // Si la contraseña es incorrecta, carga la nueva ventana
@@ -136,18 +89,7 @@ public class LoginController {
     @FXML
     void singup(ActionEvent event) {
 
-        Parent root = null;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/com/gui/login/singup.fxml"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setMinWidth(960); // Ancho mínimo de la ventana
-        stage.setMinHeight(540); // Alto mínimo de la ventana
-        stage.show();
+        NavigationUtils.switchView(event, "/com/gui/login/singup.fxml");
     }
 
     public String verificarUsuario() {
@@ -158,7 +100,7 @@ public class LoginController {
         String sql = "SELECT * FROM usuario WHERE nombre = ? AND contraseña = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, username);
             String hashedPassword = DigestUtils.sha256Hex(password);

@@ -35,9 +35,7 @@ public class PresidenteController {
     @FXML
     private VBox vboxPrincipal2;
 
-
     private Usuario usuario = LoginController.usuarioActivo;
-
 
     @FXML
     private void initialize() {
@@ -54,72 +52,35 @@ public class PresidenteController {
     @FXML
     private void accesoInteligente(ActionEvent event) {
 
-        try {
-            // Cargar el archivo FXML de la nueva ventana
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/gui/login/pruebaAcceso.fxml"));
-            Parent nuevaVentanaRoot = loader.load();
-
-            // Crear una nueva escena con el contenido cargado
-            Scene nuevaVentanaScene = new Scene(nuevaVentanaRoot);
-
-            // Obtener la ventana actual (stage) a partir del evento
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            // Establecer la nueva escena en la ventana actual
-            currentStage.setScene(nuevaVentanaScene);
-
-            // Mostrar la ventana con la nueva escena
-            currentStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace(); // Para propósitos de depuración
-        }}
+        NavigationUtils.switchView(event, "/com/gui/login/pruebaAcceso.fxml");
+    }
 
     @FXML
     private void VolverLogin(ActionEvent event) throws IOException {
         // Cargar la ventana de inicio presidente.fxml
-        Parent root = FXMLLoader.load(getClass().getResource("/com/gui/login/login.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        NavigationUtils.switchView(event, "/com/gui/login/login.fxml");
 
     }
 
     @FXML
     private void AbrirRegistros(ActionEvent event) throws IOException {
         // Cargar la ventana de inicio presidente.fxml
-        Parent root = FXMLLoader.load(getClass().getResource("/com/gui/login/registrosResidente.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        NavigationUtils.switchView(event, "/com/gui/login/registrosResidente.fxml");
 
     }
 
     @FXML
     private void AbrirChat(ActionEvent event) throws IOException {
         // Cargar la ventana de inicio presidente.fxml
-        Parent root = FXMLLoader.load(getClass().getResource("/com/gui/login/chat.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-
+        NavigationUtils.switchView(event, "/com/gui/login/chat.fxml");
 
     }
+
     @FXML
     private void gastos(ActionEvent event) throws IOException {
         // Cargar la ventana de inicio presidente.fxml
-        Parent root = FXMLLoader.load(getClass().getResource("/com/gui/login/saldo_view.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-
+        NavigationUtils.switchView(event, "/com/gui/login/saldo_view.fxml");
 
     }
-
-
 
 }
