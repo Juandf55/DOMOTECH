@@ -41,7 +41,7 @@ public class AIResidenteController {
     @FXML
     public void abrirPuertaPrincipal(ActionEvent e) {
         if (user == null) {
-            System.err.println("❌ Error: Usuario no autenticado.");
+            System.err.println("Error: Usuario no autenticado.");
             return;
         }
 
@@ -58,7 +58,7 @@ public class AIResidenteController {
     @FXML
     public void abrirPuertaGaraje1(ActionEvent e) {
         if (user == null) {
-            System.err.println("❌ Error: Usuario no autenticado.");
+            System.err.println("Error: Usuario no autenticado.");
             return;
         }
 
@@ -71,7 +71,7 @@ public class AIResidenteController {
 
     public void abrirPuertaGaraje2(ActionEvent e) {
         if (user == null) {
-            System.err.println("❌ Error: Usuario no autenticado.");
+            System.err.println("Error: Usuario no autenticado.");
             return;
         }
 
@@ -86,7 +86,7 @@ public class AIResidenteController {
     @FXML
     public void abrirPuertaGimnasio(ActionEvent e) {
         if (user == null) {
-            System.err.println("❌ Error: Usuario no autenticado.");
+            System.err.println("Error: Usuario no autenticado.");
             return;
         }
 
@@ -112,7 +112,7 @@ public class AIResidenteController {
                 return rs.getInt("id_Sensor");
             }
         } catch (SQLException e) {
-            System.err.println("❌ Error al obtener el ID del sensor: " + e.getMessage());
+            System.err.println("Error al obtener el ID del sensor: " + e.getMessage());
         }
         return -1; // Retorna -1 si no se encontró
     }

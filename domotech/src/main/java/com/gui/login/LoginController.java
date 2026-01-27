@@ -120,7 +120,7 @@ public class LoginController {
             }
 
         } catch (SQLException e) {
-            System.out.println("❌ Error en la base de datos: " + e.getMessage());
+            System.out.println("Error en la base de datos: " + e.getMessage());
         }
 
         return tipoUsuario;

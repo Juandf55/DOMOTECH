@@ -5,7 +5,6 @@ import com.gui.login.Registro;
 import java.sql.*;
 import java.util.Vector;
 
-
 public class DatabaseConnection {
     private static final String URL = "jdbc:mysql://195.235.211.197:3306/pii2_Domotech";
 
@@ -16,13 +15,14 @@ public class DatabaseConnection {
     public static Connection getConnection() {
         try {
             Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("✅ Conexión exitosa a la base de datos.");
+            System.out.println("Conexión exitosa a la base de datos.");
             return conn;
         } catch (SQLException e) {
-            System.out.println("❌ Error de conexión: " + e.getMessage());
+            System.out.println("Error de conexión: " + e.getMessage());
             return null;
         }
     }
+
     public Vector<String> obtenerMensajesPorGrupo(int idUsuario) {
         Vector<String> mensajes = new Vector<>();
         String sql = "SELECT m.mensaje, m.fecha, u.nombre " +
@@ -32,7 +32,7 @@ public class DatabaseConnection {
                 "ORDER BY m.fecha ASC";
 
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, idUsuario);
             ResultSet rs = stmt.executeQuery();
@@ -46,13 +46,12 @@ public class DatabaseConnection {
             }
 
         } catch (SQLException e) {
-            System.out.println("❌ Error al obtener mensajes por grupo del usuario: " + e.getMessage());
+            System.out.println("Error al obtener mensajes por grupo del usuario: " + e.getMessage());
             e.printStackTrace();
         }
 
         return mensajes;
     }
-
 
     public int validarUsuario(String nombreUsuario) {
         int idUsuario = -1;
@@ -72,7 +71,6 @@ public class DatabaseConnection {
         return idUsuario;
     }
 
-
     public void insertarMensaje(int idUsuario, String mensaje) {
         try (Connection conn = getConnection()) {
             String sql = "INSERT INTO mensaje (mensaje, id_Usuario) VALUES (?, ?)";
@@ -84,7 +82,6 @@ public class DatabaseConnection {
             e.printStackTrace();
         }
     }
-
 
     public Vector<String> obtenerMensajesPorComunidad(String nombreComunidad) {
         Vector<String> mensajes = new Vector<>();
@@ -108,7 +105,6 @@ public class DatabaseConnection {
         return mensajes;
     }
 
-
     public boolean insertarMensaje(Mensaje mensaje) {
         String sql = "INSERT INTO mensaje (mensaje, fecha, id_Usuario) VALUES (?, ?, ?)";
         try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -118,23 +114,23 @@ public class DatabaseConnection {
             pstmt.setInt(3, mensaje.getIdUsuario());
 
             pstmt.executeUpdate();
-            System.out.println("✅ Mensaje insertado correctamente.");
+            System.out.println("Mensaje insertado correctamente.");
             return true;
 
-
         } catch (SQLException e) {
-            System.out.println("❌ Error al insertar mensaje: " + e.getMessage());
+            System.out.println("Error al insertar mensaje: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
     }
+
     public Vector<String> obtenerDatosDeSensores() {
         Vector<String> datosSensores = new Vector<>();
         String sql = "SELECT id_sensor, dato, fecha FROM sensores";
 
         try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 int id = rs.getInt("id_sensor");
@@ -146,19 +142,18 @@ public class DatabaseConnection {
             }
 
         } catch (SQLException e) {
-            System.out.println("❌ Error al obtener datos de sensores: " + e.getMessage());
+            System.out.println("Error al obtener datos de sensores: " + e.getMessage());
             e.printStackTrace();
         }
 
         return datosSensores;
     }
 
-
     public void mostrarMensaje() {
         String sql = "SELECT * FROM mensaje";
         try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 int id = rs.getInt("id_Mensaje");
@@ -167,16 +162,14 @@ public class DatabaseConnection {
                 int idUsuario = rs.getInt("id_Usuario");
                 int idComunidad = rs.getInt("id_comunidad");
 
-                System.out.println("ID: " + id + ", Mensaje: " + mensaje + ", Fecha: " + fecha + ", ID Usuario: " + idUsuario + ", ID Comunidad: " + idComunidad);
+                System.out.println("ID: " + id + ", Mensaje: " + mensaje + ", Fecha: " + fecha + ", ID Usuario: "
+                        + idUsuario + ", ID Comunidad: " + idComunidad);
             }
         } catch (SQLException e) {
-            System.out.println("❌ Error al mostrar mensajes: " + e.getMessage());
+            System.out.println("Error al mostrar mensajes: " + e.getMessage());
             e.printStackTrace();
         }
     }
-
-
-
 
     public Float obtenerUltimoDatoSensor(int idSensor) {
         String sql = "SELECT dato FROM sensores WHERE id_sensor = ? ORDER BY fecha DESC LIMIT 1";
@@ -186,26 +179,24 @@ public class DatabaseConnection {
                 if (rs.next()) {
                     return rs.getFloat("dato");
                 } else {
-                    System.out.println("⚠ No hay datos para el sensor con ID: " + idSensor);
+                    System.out.println("No hay datos para el sensor con ID: " + idSensor);
                     return null;
                 }
             }
         } catch (SQLException e) {
-            System.err.println("❌ Error al obtener el último dato del sensor " + idSensor + ": " + e.getMessage());
+            System.err.println("Error al obtener el último dato del sensor " + idSensor + ": " + e.getMessage());
             return null;
         }
     }
 
-
-
     public Vector<String> obtenerRegistrosPorUsuario(int idUsuario, String comunidad) {
         Vector<String> registros = new Vector<>();
         String sql = "SELECT r.dato FROM registro r JOIN usuario u ON r.id_Usuario = u.id_Usuario WHERE r.id_Usuario = ? AND u.comunidad = ?";
-        try(Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, idUsuario);
             stmt.setString(2, comunidad);
-            try(ResultSet rs = stmt.executeQuery()) {
-                while(rs.next()) {
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
                     String dato = rs.getString("dato");
                     registros.add(dato);
                 }
@@ -221,7 +212,7 @@ public class DatabaseConnection {
         String sql = "SELECT r.dato FROM registro r JOIN usuario u ON r.id_Usuario = u.id_Usuario WHERE u.comunidad = ?";
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, comunidad);
-            try(ResultSet rs = stmt.executeQuery()) {
+            try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     registros.add(rs.getString("dato"));
                 }
@@ -232,14 +223,11 @@ public class DatabaseConnection {
         return registros;
     }
 
-
-
-
     // Inserta un usuario en la tabla
     public boolean insertarUsuario(Usuario usuario) {
         String sql = "INSERT INTO usuario (edad, rol, nombre, contraseña, correo, comunidad) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = this.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setInt(1, usuario.getEdad());
             pstmt.setString(2, usuario.getTipo());
             pstmt.setString(3, usuario.getNombre());
@@ -248,17 +236,18 @@ public class DatabaseConnection {
             pstmt.setString(6, usuario.getNombreComunidad());
 
             pstmt.executeUpdate();
-            System.out.println("✅ Usuario insertado correctamente.");
+            System.out.println("Usuario insertado correctamente.");
             return true;
         } catch (SQLException e) {
-            System.out.println("❌ Error al insertar usuario: " + e.getMessage());
+            System.out.println("Error al insertar usuario: " + e.getMessage());
             return false;
         }
     }
+
     public boolean existeUsuario(String nombreUsuario) {
         String sql = "SELECT 1 FROM usuario WHERE nombre = ?";
         try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, nombreUsuario);
             ResultSet rs = stmt.executeQuery();
             return rs.next(); // true si existe
@@ -271,7 +260,7 @@ public class DatabaseConnection {
     public boolean existeRolEnComunidad(String rol, String comunidad) {
         String sql = "SELECT 1 FROM usuario WHERE rol = ? AND comunidad = ? LIMIT 1";
         try (Connection conn = this.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, rol.toLowerCase());
             stmt.setString(2, comunidad);
             ResultSet rs = stmt.executeQuery();
@@ -282,14 +271,12 @@ public class DatabaseConnection {
         }
     }
 
-
-
     // Muestra todos los usuarios en consola
     public void mostrarUsuarios() {
         String sql = "SELECT * FROM usuario";
         try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 int id = rs.getInt("id_Usuario");
@@ -300,15 +287,14 @@ public class DatabaseConnection {
                 String correo = rs.getString("correo");
                 String comunidad = rs.getString("comunidad");
 
-                System.out.println("ID: " + id + ", Nombre: " + nombre + ", Rol: " + rol + ", Edad: " + edad + ", Correo: " + correo + ", Comunidad: " + comunidad);
+                System.out.println("ID: " + id + ", Nombre: " + nombre + ", Rol: " + rol + ", Edad: " + edad
+                        + ", Correo: " + correo + ", Comunidad: " + comunidad);
             }
 
         } catch (SQLException e) {
-            System.out.println("❌ Error al mostrar usuarios: " + e.getMessage());
+            System.out.println("Error al mostrar usuarios: " + e.getMessage());
         }
     }
-
-
 
     public void eliminarUsuario(String nombreUsuario, String rolUsuario, String comunidadUsuario) {
         String obtenerIdsSQL = "SELECT id_Usuario FROM usuario WHERE nombre = ? AND rol = ? AND comunidad = ?";
@@ -316,7 +302,7 @@ public class DatabaseConnection {
         String eliminarUsuariosSQL = "DELETE FROM usuario WHERE id_Usuario = ?";
 
         try (Connection conn = getConnection()) {
-            conn.setAutoCommit(false);  // Desactiva autocommit para transacción segura
+            conn.setAutoCommit(false); // Desactiva autocommit para transacción segura
 
             try (PreparedStatement obtenerIdsStmt = conn.prepareStatement(obtenerIdsSQL)) {
                 obtenerIdsStmt.setString(1, nombreUsuario);
@@ -331,7 +317,7 @@ public class DatabaseConnection {
                     int idUsuario = rs.getInt("id_Usuario");
 
                     try (PreparedStatement stmt1 = conn.prepareStatement(eliminarAsignacionesSQL);
-                         PreparedStatement stmt2 = conn.prepareStatement(eliminarUsuariosSQL)) {
+                            PreparedStatement stmt2 = conn.prepareStatement(eliminarUsuariosSQL)) {
 
                         stmt1.setInt(1, idUsuario);
                         stmt1.executeUpdate();
@@ -342,15 +328,16 @@ public class DatabaseConnection {
                 }
 
                 if (existeUsuario) {
-                    conn.commit();  // Confirma los cambios si hubo usuarios eliminados
-                    System.out.println("✅ Todos los usuarios con nombre '" + nombreUsuario + "', rol '" + rolUsuario + "' y comunidad '" + comunidadUsuario + "' han sido eliminados.");
+                    conn.commit(); // Confirma los cambios si hubo usuarios eliminados
+                    System.out.println("Todos los usuarios con nombre '" + nombreUsuario + "', rol '" + rolUsuario
+                            + "' y comunidad '" + comunidadUsuario + "' han sido eliminados.");
                 } else {
-                    System.out.println("⚠ No se encontraron usuarios con los datos proporcionados.");
+                    System.out.println("No se encontraron usuarios con los datos proporcionados.");
                 }
 
             } catch (SQLException e) {
-                conn.rollback();  // Revierte cambios en caso de error
-                System.out.println("❌ Error al eliminar usuarios: " + e.getMessage());
+                conn.rollback(); // Revierte cambios en caso de error
+                System.out.println("Error al eliminar usuarios: " + e.getMessage());
                 e.printStackTrace();
             }
         } catch (SQLException e) {
@@ -358,12 +345,11 @@ public class DatabaseConnection {
         }
     }
 
-
     public void consultarSensor() throws SQLException {
         String sql = "SELECT * FROM asignacion_sensor";
         try (Connection conn = getConnection();
-             Statement statement = conn.createStatement();
-             ResultSet rs = statement.executeQuery(sql)) {
+                Statement statement = conn.createStatement();
+                ResultSet rs = statement.executeQuery(sql)) {
 
             while (rs.next()) {
                 int id = rs.getInt("id_Sensor");
@@ -373,9 +359,10 @@ public class DatabaseConnection {
                 System.out.println("ID: " + id + ", Ubicación: " + ubicacion + ", id UsuarioAsignado: " + idUsuario);
             }
         } catch (SQLException ex) {
-            System.out.println("❌ Error al mostrar el sensor: " + ex.getMessage());
+            System.out.println("Error al mostrar el sensor: " + ex.getMessage());
         }
     }
+
     private boolean verificarExistenciaUsuarioPorNombre(String nombreUsuario) {
         try (Connection conn = getConnection()) {
             String query = "SELECT COUNT(*) FROM usuario WHERE nombre = ?";
@@ -386,20 +373,21 @@ public class DatabaseConnection {
                 return rs.getInt(1) > 0;
             }
         } catch (SQLException e) {
-            System.err.println("❌ Error al verificar existencia de usuario: " + e.getMessage());
+            System.err.println("Error al verificar existencia de usuario: " + e.getMessage());
             return false;
         }
     }
 
-
     public void insertarSensor(Registro nuevoRegistro) {
         if (!verificarExistenciaUsuarioPorNombre(nuevoRegistro.getNombreUsuario())) {
-            System.err.println("❌ Error: Usuario con nombre " + nuevoRegistro.getNombreUsuario() + " no existe en la base de datos.");
+            System.err.println("Error: Usuario con nombre " + nuevoRegistro.getNombreUsuario()
+                    + " no existe en la base de datos.");
             return;
         }
 
         try (Connection conn = getConnection()) {
-            if (conn == null) return;
+            if (conn == null)
+                return;
 
             String checkQuery = "SELECT COUNT(*) FROM asignacion_sensor WHERE id_Sensor = ?";
             try (PreparedStatement checkStmt = conn.prepareStatement(checkQuery)) {
@@ -422,15 +410,16 @@ public class DatabaseConnection {
                     try (PreparedStatement insertStmt = conn.prepareStatement(insertQuery)) {
                         insertStmt.setInt(1, nuevoRegistro.getIdSensor());
                         insertStmt.setString(2, nuevoRegistro.getDescripcion());
-                        insertStmt.setString(3, nuevoRegistro.getNombreUsuario());  // Ahora usa el nombre
+                        insertStmt.setString(3, nuevoRegistro.getNombreUsuario()); // Ahora usa el nombre
                         insertStmt.executeUpdate();
                         System.out.println("Registro insertado con éxito.");
                     }
                 }
                 String insertQuery = "INSERT INTO registro (id_Sensor, dato, tiempo, id_Usuario) VALUES (?, ?, ?, ?)";
-                try(PreparedStatement insertStmt = conn.prepareStatement(insertQuery)) {
+                try (PreparedStatement insertStmt = conn.prepareStatement(insertQuery)) {
                     // Esta es la info que devolverá el registro
-                    String dato = nuevoRegistro.getNombreUsuario() + " ha abierto la puerta " + nuevoRegistro.getDescripcion() + " el dia " + nuevoRegistro.getFecha();
+                    String dato = nuevoRegistro.getNombreUsuario() + " ha abierto la puerta "
+                            + nuevoRegistro.getDescripcion() + " el dia " + nuevoRegistro.getFecha();
 
                     insertStmt.setInt(1, nuevoRegistro.getIdSensor());
                     insertStmt.setString(2, dato);
@@ -441,7 +430,7 @@ public class DatabaseConnection {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("❌ Error al insertar o actualizar en la base de datos: " + e.getMessage());
+            System.err.println("Error al insertar o actualizar en la base de datos: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -450,77 +439,76 @@ public class DatabaseConnection {
         String sql = "DELETE FROM asignacion_sensor WHERE id_Sensor = ?";
 
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, idSensor);
             int filas = pstmt.executeUpdate();
 
             if (filas > 0) {
-                System.out.println("✅ Sensor con ID " + idSensor + " eliminado correctamente.");
+                System.out.println("Sensor con ID " + idSensor + " eliminado correctamente.");
                 return true;
             } else {
-                System.out.println("⚠ No se encontró sensor con ID " + idSensor);
+                System.out.println("No se encontró sensor con ID " + idSensor);
                 return false;
             }
 
         } catch (SQLException e) {
-            System.out.println("❌ Error al eliminar sensor: " + e.getMessage());
+            System.out.println("Error al eliminar sensor: " + e.getMessage());
             return false;
         }
     }
-
 
     public boolean eliminarSensorPorUbicacion(String ubicacion) {
         String sql = "DELETE FROM asignacion_sensor WHERE ubicacion = ?";
 
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, ubicacion);
             int filas = pstmt.executeUpdate();
 
             if (filas > 0) {
-                System.out.println("✅ Sensor(es) en '" + ubicacion + "' eliminado(s).");
+                System.out.println("Sensor(es) en '" + ubicacion + "' eliminado(s).");
                 return true;
             } else {
-                System.out.println("⚠ No hay sensores en esa ubicación.");
+                System.out.println("No hay sensores en esa ubicación.");
                 return false;
             }
 
         } catch (SQLException e) {
-            System.out.println("❌ Error al eliminar sensor: " + e.getMessage());
+            System.out.println("Error al eliminar sensor: " + e.getMessage());
             return false;
         }
     }
+
     public boolean eliminarSensorPorUsuario(int idUsuario) {
         String sql = "DELETE FROM asignacion_sensor WHERE id_Usuario = ?";
 
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, idUsuario);
             int filas = pstmt.executeUpdate();
 
             if (filas > 0) {
-                System.out.println("✅ Sensor(es) del usuario con ID " + idUsuario + " eliminado(s).");
+                System.out.println("Sensor(es) del usuario con ID " + idUsuario + " eliminado(s).");
                 return true;
             } else {
-                System.out.println("⚠ No hay sensores asignados a ese usuario.");
+                System.out.println("No hay sensores asignados a ese usuario.");
                 return false;
             }
 
         } catch (SQLException e) {
-            System.out.println("❌ Error al eliminar sensor: " + e.getMessage());
+            System.out.println("Error al eliminar sensor: " + e.getMessage());
             return false;
         }
     }
-
 
     public boolean eliminarSensorPorIdUbicacionYUsuario(int idSensor, String ubicacion, int idUsuario) {
         String sql = "DELETE FROM asignacion_sensor WHERE id_Sensor = ? AND ubicacion = ? AND id_Usuario = ?";
 
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, idSensor);
             pstmt.setString(2, ubicacion);
@@ -529,15 +517,16 @@ public class DatabaseConnection {
             int filas = pstmt.executeUpdate();
 
             if (filas > 0) {
-                System.out.println("✅ Sensor eliminado: ID = " + idSensor + ", Ubicación = '" + ubicacion + "', ID Usuario = " + idUsuario);
+                System.out.println("Sensor eliminado: ID = " + idSensor + ", Ubicación = '" + ubicacion
+                        + "', ID Usuario = " + idUsuario);
                 return true;
             } else {
-                System.out.println("⚠ No se encontró ningún sensor con esos datos.");
+                System.out.println("No se encontró ningún sensor con esos datos.");
                 return false;
             }
 
         } catch (SQLException e) {
-            System.out.println("❌ Error al eliminar sensor: " + e.getMessage());
+            System.out.println("Error al eliminar sensor: " + e.getMessage());
             return false;
         }
     }
@@ -545,22 +534,21 @@ public class DatabaseConnection {
     public void mostrarSensores() throws SQLException {
         String sql = "SELECT * FROM asignacion_sensor";
         try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
                 int idSensor = rs.getInt("id_Sensor");
                 String ubicacion = rs.getString("ubicacion");
                 int idUsuario = rs.getInt("id_Usuario");
 
-
-                System.out.println("ID: " + idSensor + ", ubicacion: "+ ubicacion + ", id_Usuario: " + idUsuario);
+                System.out.println("ID: " + idSensor + ", ubicacion: " + ubicacion + ", id_Usuario: " + idUsuario);
             }
 
         }
 
-
     }
+
     public boolean insertarGasto(Gasto gasto) {
         String sql = "INSERT INTO gastos (id_usuario, tipo_gasto, cantidad, fecha) VALUES (?, ?, ?, ?)";
 
@@ -571,18 +559,13 @@ public class DatabaseConnection {
             pstmt.setDate(4, gasto.getFecha());
 
             pstmt.executeUpdate();
-            System.out.println("✅ Gasto insertado correctamente.");
+            System.out.println("Gasto insertado correctamente.");
             return true;
 
         } catch (SQLException e) {
-            System.out.println("❌ Error al insertar gasto: " + e.getMessage());
+            System.out.println("Error al insertar gasto: " + e.getMessage());
             return false;
         }
     }
-
-
-
-
-
 
 }

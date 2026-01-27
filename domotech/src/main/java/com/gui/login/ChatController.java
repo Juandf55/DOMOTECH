@@ -43,7 +43,7 @@ public class ChatController implements Initializable {
     private Vector<String> mensajesActuales = new Vector<>();
     private final int idActivo = LoginController.idActivo;
 
-    private Thread hiloActualizador; // 🔁 Referencia al hilo
+    private Thread hiloActualizador; // Referencia al hilo
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -69,7 +69,7 @@ public class ChatController implements Initializable {
                 if (exito) {
                     txt.clear();
                 } else {
-                    System.out.println("❌ Error al insertar el mensaje.");
+                    System.out.println("Error al insertar el mensaje.");
                 }
             }
         }
@@ -114,7 +114,7 @@ public class ChatController implements Initializable {
 
                     Thread.sleep(2000); // 2 segundos
                 } catch (InterruptedException e) {
-                    System.out.println("🛑 Hilo de actualización interrumpido.");
+                    System.out.println("Hilo de actualización interrumpido.");
                     break;
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -128,7 +128,7 @@ public class ChatController implements Initializable {
 
     @FXML
     private void volverMenu(ActionEvent event) throws IOException {
-        // 🛑 Detener hilo antes de salir
+        // Detener hilo antes de salir
         if (hiloActualizador != null && hiloActualizador.isAlive()) {
             hiloActualizador.interrupt();
         }

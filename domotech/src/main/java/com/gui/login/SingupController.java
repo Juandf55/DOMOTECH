@@ -51,7 +51,7 @@ public class SingupController {
 
         String username = txt_username.getText();
         String rawPassword = txt_password.getText();
-        String password = DigestUtils.sha256Hex(rawPassword); // 🔐 Hasheamos la contraseña
+        String password = DigestUtils.sha256Hex(rawPassword); // Hasheamos la contraseña
         String correo = txt_gmail.getText();
         String tipo = txt_type.getText();
         String Stringedad = txt_edad.getText();
